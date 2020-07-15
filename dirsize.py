@@ -121,17 +121,23 @@ while True:
                     bg="blue", fg="white",
                     font="system", command=goUp)
         gu.pack()
-        for item in all_files:
+        for item in sorted(all_files, key=lambda name: getSize(name)):
             print(item)
             name = str(item)
             # name.set(str(item))
             # Button(frame, width=30, bg="white", text=name, command = lambda: goDown(this.text)).pack()
             labelText = " ".join([name, humanReadableSize(getSize(name))])
-            b = Button(frame.interior, width=30, height=1, relief=FLAT,
-                       bg="blue", fg="white",
-                       font="system", text=labelText)
-            b.config(command=lambda x=name: goDown(x))
-            b.pack()
+            if os.path.isfile(os.path.join(os.getcwd(), name)):
+                b = Label(frame.interior, width=30, height=1, relief=FLAT,
+                           bg="green", fg="white",
+                           font="system", text=labelText)
+                b.pack()
+            else:
+                b = Button(frame.interior, width=30, height=1, relief=FLAT,
+                           bg="blue", fg="white",
+                           font="system", text=labelText)
+                b.config(command=lambda x=name: goDown(x))
+                b.pack()
         changed = False
 
     root.update()
