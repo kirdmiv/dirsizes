@@ -116,7 +116,10 @@ while True:
         frame.destroy()
         frame = VerticalScrolledFrame(root)
         frame.pack()
-        gu = Button(frame.interior, text="..", width=30, bg="white", command=goUp)
+        gu = Button(frame.interior, text="..", width=30,
+                    height=1, relief=FLAT,
+                    bg="blue", fg="white",
+                    font="system", command=goUp)
         gu.pack()
         for item in all_files:
             print(item)
@@ -124,7 +127,9 @@ while True:
             # name.set(str(item))
             # Button(frame, width=30, bg="white", text=name, command = lambda: goDown(this.text)).pack()
             labelText = " ".join([name, humanReadableSize(getSize(name))])
-            b = Button(frame.interior, width=30, bg="white", text=labelText)
+            b = Button(frame.interior, width=30, height=1, relief=FLAT,
+                       bg="blue", fg="white",
+                       font="system", text=labelText)
             b.config(command=lambda x=name: goDown(x))
             b.pack()
         changed = False
