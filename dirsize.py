@@ -105,6 +105,7 @@ def humanReadableSize(num, suffix='B'):
 
 
 root = Tk()
+root.title("Calculate directory sizes")
 frame = VerticalScrolledFrame(root)
 frame.pack()
 changed = True
@@ -118,7 +119,7 @@ while True:
         frame.pack()
         gu = Button(frame.interior, text="..", width=30,
                     height=1, relief=FLAT,
-                    bg="blue", fg="white",
+                    bg="#540804", fg="white",
                     font="system", command=goUp)
         gu.pack()
         for item in sorted(all_files, key=lambda name: getSize(name)):
@@ -129,12 +130,12 @@ while True:
             labelText = " ".join([name, humanReadableSize(getSize(name))])
             if os.path.isfile(os.path.join(os.getcwd(), name)):
                 b = Label(frame.interior, width=30, height=1, relief=FLAT,
-                           bg="green", fg="white",
+                           bg="#AD2E24", fg="white",
                            font="system", text=labelText)
                 b.pack()
             else:
                 b = Button(frame.interior, width=30, height=1, relief=FLAT,
-                           bg="blue", fg="white",
+                           bg="#81171B", fg="white",
                            font="system", text=labelText)
                 b.config(command=lambda x=name: goDown(x))
                 b.pack()
