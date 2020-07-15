@@ -115,6 +115,11 @@ def humanReadableSize(num, suffix='B'):
     return "%.1f %s%s" % (num, 'Yi', suffix)
 
 
+def refresh():
+    global changed
+    changed = True
+
+
 root = Tk()
 root.title("Calculate directory sizes")
 frame = VerticalScrolledFrame(root)
@@ -130,7 +135,9 @@ chekout.pack()
 
 calculateSize = BooleanVar()
 calculateSize.set(1)
-calculateSizeCB = Checkbutton(text="Calculate sizes of files and directories", variable=calculateSize, onvalue=1, offvalue=0)
+calculateSizeCB = Checkbutton(text="Calculate sizes of files and directories",
+                              variable=calculateSize, onvalue=1, offvalue=0,
+                              command=refresh)
 calculateSizeCB.pack()
 
 while True:
@@ -154,8 +161,8 @@ while True:
             labelText = " ".join([name, humanReadableSize(getSize(name))])
             if os.path.isfile(os.path.join(os.getcwd(), name)):
                 b = Label(frame.interior, width=30, height=1, relief=FLAT,
-                           bg="#AD2E24", fg="white",
-                           font="system", text=labelText)
+                          bg="#AD2E24", fg="white",
+                          font="system", text=labelText)
                 b.pack()
             else:
                 b = Button(frame.interior, width=30, height=1, relief=FLAT,
