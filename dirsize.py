@@ -58,6 +58,14 @@ def goUp():
     changed = True
 
 
+def switchDir():
+    global changed
+    global cwd
+    # os.chdir(os.getcwd() + os.path.sep + "..")
+    os.chdir(cwd.get())
+    changed = True
+
+
 def goDown(dirName):
     global changed
     # os.chdir(os.getcwd() + os.path.sep + dirName)
@@ -85,6 +93,9 @@ def getDirSize(dirName):
 
 def getSize(itemName, isFile=False):
     global sizes
+    global calculateSize
+    if not calculateSize.get():
+        return 0
     if sizes.get(itemName) != None:
         return sizes[itemName]
     if '.' in itemName or isFile:
@@ -111,8 +122,21 @@ frame.pack()
 changed = True
 sizes = {}
 
+cwd = Entry(root, width=40)
+cwd.insert(0, os.getcwd())
+cwd.pack()
+chekout = Button(root, text="Move to ...", command=switchDir)
+chekout.pack()
+
+calculateSize = BooleanVar()
+calculateSize.set(1)
+calculateSizeCB = Checkbutton(text="Calculate sizes of files and directories", variable=calculateSize, onvalue=1, offvalue=0)
+calculateSizeCB.pack()
+
 while True:
     if changed:
+        cwd.delete(0, END)
+        cwd.insert(0, os.getcwd())
         all_files = os.listdir()
         frame.destroy()
         frame = VerticalScrolledFrame(root)
